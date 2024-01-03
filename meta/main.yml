@@ -1,0 +1,7 @@
+---
+galaxy_info:
+  author: Travis Michette
+  description: Network Infrastructure Report - DO457 Demo
+  company: Red Hat
+  license: GPL-2.0
+  min_ansible_version: "2.11"

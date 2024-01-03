@@ -1,0 +1,39 @@
+<div id="accordion">
+<div>
+<h3>L3 Interfaces - IP Addresses</h3>
+<div class="net_content">
+{% if hostvars[managed_node]['ansible_network_resources']['l3_interfaces'] is defined and hostvars[managed_node]['ansible_network_resources']['l3_interfaces']|length > 0 %}
+<table id="subtable">
+    <thead>
+        <tr>
+            <th>Interface Name</th>
+            <th>IPv4</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for interface in hostvars[managed_node]['ansible_network_resources']['l3_interfaces'] %}
+        <tr>
+            <td>{{interface['name']}}</td>
+            <td>
+{% if interface.ipv4 is defined %}
+{% for address in interface.ipv4 %}
+{{ address['address']|default("Not Configured") }}
+{% if address['secondary'] is defined %}
+secondary
+{% endif %}
+{% if loop.length > 1 and not loop.last %}<br>{% endif %}
+{% endfor %}
+{% endif %}
+            </td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% elif hostvars[managed_node]['ansible_network_resources']['l3_interfaces'] is defined and hostvars[managed_node]['ansible_network_resources']['l3_interfaces']|length == 0 %}
+L3 information is not configured on this managed node
+{% else %}
+No L3 information available
+{% endif %}
+</div>
+</div>
+</div>

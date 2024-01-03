@@ -1,0 +1,8 @@
+vendor:
+  ios: 'Cisco'
+  junos: "Juniper"
+  eos: "Arista"
+transport:
+  cliconf: "network_cli"
+  netconf: "netconf"
+  httpapi: "httpapi"

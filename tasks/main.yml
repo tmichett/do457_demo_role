@@ -1,0 +1,23 @@
+---
+- name: Copy CSS style
+  become: true
+  ansible.builtin.copy:
+    src: "css"
+    dest: "/var/www/html"
+    directory_mode: true
+    mode: "644"
+
+- name: Copy CSS images
+  become: true
+  ansible.builtin.copy:
+    src: "aap.png"
+    dest: "/var/www/html"
+    directory_mode: true
+    mode: "644"
+
+- name: Create HTML report
+  become: true
+  ansible.builtin.template:
+    src: report.j2
+    dest: "/var/www/html/index.html"
+    mode: "644"

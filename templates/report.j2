@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Network Automation Report</title>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(function() {
+$( "#accordion > div" ).accordion({
+    header: "h3",
+    active: false,
+collapsible: true
+});
+});
+</script>
+</head>
+<body>
+<section>
+<center>
+<h1>Network Infrastructure Report</h1>
+<img src="aap.png" width="200" alt="logo">
+<table class="main_net_table">
+    <thead>
+        <tr>
+            <th>Managed Node</th>
+            <th>Networking</th>
+            <th>Configuration</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for managed_node in groups['managed_nodes']|sort %}
+{% if hostvars[managed_node]['ansible_facts']['network_resources'] is defined %}
+        <tr>
+            <td class="summary_info">
+              <div id="hostname">
+              <p class="hostname">{{ hostvars[managed_node].ansible_net_hostname }}</p>
+            </div>
+              <div id="net_info_div">
+            {% include 'node.j2' %}
+            {% include 'ansible.j2' %}
+          </div>
+            </td>
+            <td>
+            {% include 'l3.j2' %}
+            {% include 'vlans.j2' %}
+            </td>
+            <td>
+            {% include 'ntp.j2' %}
+            </td>
+        </tr>
+{% endif %}
+{% endfor %}
+    </tbody>
+</table>
+</center>
+</section>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div id="accordion">
+<div>
+<h3>VLANs</h3>
+<div class="net_content">
+{% if hostvars[managed_node]['ansible_network_resources']['vlans'] is defined and hostvars[managed_node]['ansible_network_resources']['vlans']|length > 0 %}
+<table id="subtable">
+    <thead>
+        <tr>
+            <th>vlan_id</th>
+            <th>Name</th>
+            <th>state</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for vlan in hostvars[managed_node]['ansible_network_resources']['vlans'] %}
+        <tr>
+            <td>{{vlan['vlan_id']}}</td>
+            <td>{{vlan['name']|default("none")}}</td>
+            <td>{{vlan['state']|default("default")}}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% elif hostvars[managed_node]['ansible_network_resources']['vlans'] is defined and hostvars[managed_node]['ansible_network_resources']['vlans']|length == 0 %}
+VLANs are not configured on this managed node
+{% else %}
+No VLAN information available
+{% endif %}
+</div>
+</div>
+</div>

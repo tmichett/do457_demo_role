@@ -1,0 +1,27 @@
+<div id="accordion">
+<div>
+<h3>NTP</h3>
+<div class="net_content">
+{% if hostvars[managed_node]['ansible_network_resources']['ntp_global'] is defined and hostvars[managed_node]['ansible_network_resources']['ntp_global']|length > 0 %}
+<table id="subtable">
+    <thead>
+        <tr>
+            <th>Servers</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for ntpvar in hostvars[managed_node]['ansible_network_resources']['ntp_global']['servers'] %}
+        <tr>
+            <td>{{ntpvar['server']}}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% elif hostvars[managed_node]['ansible_network_resources']['ntp_global'] is defined and hostvars[managed_node]['ansible_network_resources']['ntp_global']|length == 0 %}
+NTP is not configured on this managed node
+{% else %}
+No NTP information available
+{% endif %}
+</div>
+</div>
+</div>
